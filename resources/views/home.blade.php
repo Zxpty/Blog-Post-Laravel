@@ -25,7 +25,21 @@
         <button>Create Post</button>
         </form>
     </div>
-
+    <div>
+        <h2>Todos Tus Post</h2>
+        @foreach ($posts as $post)
+            <div>
+                <h3>{{$post['title']}} by {{$post->user->name}}</h3>
+                <p>{{$post['body']}}</p>
+                <p><a href="/edit-post/{{$post->id}}">Edit</a></p>
+                <form action="/delete-post/{{$post->id}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button>Delete</button>
+                </form>
+            </div>
+        @endforeach
+    </div>
 
     @else
     <div >
