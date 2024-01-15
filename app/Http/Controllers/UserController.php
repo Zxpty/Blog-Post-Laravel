@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -24,15 +26,22 @@ class UserController extends Controller
         if (auth()->attempt(['name' => $incomingFields['loginname'], 'password' => $incomingFields['loginpassword']])) {
             $request->session()->regenerate();
             return redirect('/home');
-        }
+        } 
         return redirect('/');
     }
 
 
-    public function logout(Request $request)
+    public function logout()
     {
-        auth()->logout();
-        return redirect('/');
+        try {
+            Auth::logout();
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+            
+            return redirect('/auth');
+        } catch (\Illuminate\Database\QueryException $exception) {
+            return abort(500);
+        }
     }
 
     public function registerGet()
@@ -40,7 +49,7 @@ class UserController extends Controller
         $title = 'Registration';
         return view('/auth/register', compact('title'));
     }
-    
+
     public function register(Request $request)
     {
         $incomingFields = $request->validate([
@@ -54,4 +63,5 @@ class UserController extends Controller
         // auth()->login($user);
         return redirect('/');
     }
+    
 }

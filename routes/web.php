@@ -17,36 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     // $posts = Post::where('user_id', auth()->id())->get(); esto funciona pero estamos perdiendo las relaciones que tiene.
-//     $posts = [];
-//     if (auth()->check()) {
-//         $posts = auth()->user()->usersCoolPosts()->latest()->get();
-//     }
-//     return view('home', ['posts' => $posts]);
-// });
 
 Route::get('/', function(){
    return view('auth.login');
 });
 
-// Route::middleware(['AlreadyLogin'])->group(function(){
-//    //landing
-//    Route::get('/', function(){
-//       return view()
-//    });
-// });
-
-
 // Login
 Route::get('/{url}', [UserController::class, 'loginGet'])->where(['url' => 'auth|auth/login'])->name('auth');
 Route::post('/login', [UserController::class, 'login']);
+
 // Register
 Route::get('/auth/register', [UserController::class, 'registerGet']);
 Route::post('/auth/register', [UserController::class, 'register']);
-// Route::post('/register', [UserController::class, 'register']);
+
 //Log out
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/auth/logout', [UserController::class, 'logout']);
 
 // main
 Route::middleware(['auth'])->group(function () {
@@ -55,9 +40,12 @@ Route::middleware(['auth'])->group(function () {
    });
 });
 
-//Blog post Routes
 
-Route::post('/create-post', [PostController::class, 'createPost']);
+
+
+//Blog post Routes
+Route::get('/home', [PostController::class, 'viewPosts'])->name('home');
+Route::post('/home', [PostController::class, 'createPost']);
 Route::get('/edit-post/{post}', [PostController::class, 'showEditScreen']);
 Route::put('/edit-post/{post}', [PostController::class, 'actuallyUpdatePost']);
 Route::delete('/delete-post/{post}', [PostController::class, 'deletePost']);
