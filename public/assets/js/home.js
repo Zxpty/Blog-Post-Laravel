@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const openMenuIcon = document.getElementById('menu-icon')
     const navbar = document.getElementById("navigation-var");
-
     const onMenuClick = () => {
         const responsive_class_name = "responsive";
         navbar.classList.toggle(responsive_class_name);
     };
 
-    navbar.addEventListener('click', onMenuClick);
+     openMenuIcon.addEventListener('click', onMenuClick);
 
     const inputClick = document.getElementById('input__modal');
     const modal = document.getElementById('modal__post');
@@ -38,14 +38,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const formDeleteCard = document.getElementById('deleteCards')
 
     deleteCardButton.addEventListener('click', () => {
-            formDeleteCard.submit();
-        
+        formDeleteCard.submit();
+
     })
 
     const buttonEditPost = document.getElementById('edit__modal')
     const selectedPostEdit = document.getElementById('modal__edit__post')
 
-    buttonEditPost.addEventListener('click',()=>{
+    buttonEditPost.addEventListener('click', () => {
         selectedPostEdit.style.display = 'block'
     })
 

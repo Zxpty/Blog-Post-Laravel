@@ -1,7 +1,7 @@
 <div class="logo">
     <i class="fa-solid fa-rocket"></i>
 </div>
-<a id="menu-icon" class="menu-icon" onclick="onMenuClick()">
+<a id="menu-icon" class="menu-icon">
     <i class="fa fa-bars"></i>
 </a>
 <div id="navigation-var" class="nav-var">
